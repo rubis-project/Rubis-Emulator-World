@@ -10,6 +10,10 @@ mysql:
   dbname: "rubis_world"
   user: "root"
   password: ""
+http:
+  host: "127.0.0.1"
+  port: 81
+  password: "mySecretPassword"
 
 # Debug mode
 debug: false
