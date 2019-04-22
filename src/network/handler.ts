@@ -1,5 +1,7 @@
 import axios from 'axios';
 import AuthService from '../services/auth';
+import Basic from '../utils/basic';
+import DReader from '../utils/reader';
 
 export default class Handler {
     static handleAuthentificationTicket(session: any, packet: string) {
@@ -7,14 +9,15 @@ export default class Handler {
         let ticket = packet.substr(2);
         // let account: any = Managers.AuthManager.getTicket(ticket);
         let account: any = AuthService.account(ticket);
-        account.then((data: any) => { 
+        account.then((data: any) => {
             session.account = data.data.data;
-            session.logger.log(`Account "${session.account.username}" logged on worldserver`);
-            // World.sendCharactersList(session);
+            session.logger.log(`Account "${session.account.username}" logged on worldserver`); 
+            Handler.sendCharactersList(session);
         });
     }
 
-    // static sendCharactersList(session) {
+    static sendCharactersList(session: any) {
+        session.send('ALK-1|1;Jon;200;1010;;;;;0;1;0;0;0'); 
     //     let now = moment();
     //     let sub = moment(session.account.subscription, 'YYYY-MM-DD HH:mm:ss');
     //     let aboRest = sub.diff(now);
@@ -34,21 +37,23 @@ export default class Handler {
     //         session.send(packet);
     //     });
     //     session.send(packet);
-    // }
+    }
 
-    // static handleCharacterRandomName(session, packet) {
-    //     let name = Utils.Basic.randomString(Utils.Basic.randomNum(5, 9));
-    //     name = name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
+    static handleCharacterRandomName(session: any, packet: any) {
+        let name = Basic.randomString(Basic.randomNum(5, 9));
+        name = name.charAt(0).toUpperCase() + name.substring(1).toLowerCase();
     
-    //     session.send('APK' + name);
-    // }
+        session.send('APK' + name);
+    }
 
     // static handleCharacterRequestList(session, packet) {
     //     Handler.World.sendCharactersList(session);
     // }
 
-    // static handleCharacterCreation(session, packet) {
-    //     let data = packet.substring(2).split('|');
+    static handleCharacterCreation(session: any, packet: any) {
+        // let data = packet.substring(2).split('|');
+        let data2 = DReader.getCharacterCreationData(packet);
+        console.log('handleCharacterCreation', data2);
     //     let nw = {
     //         accountId: session.account.id,
     //         name: data[0],
@@ -69,7 +74,7 @@ export default class Handler {
     //         Utils.Logger.global.log(`Character "${nw.name}" created by player "${session.account.username}" on server id "${nw.serverId}"`);
     //         World.sendCharactersList(session);
     //     });
-    // }
+    }
 
     // static handleCharacterDeletion(session, packet) {
     //     let id = parseInt(packet.substring(2).replace('|', ''));

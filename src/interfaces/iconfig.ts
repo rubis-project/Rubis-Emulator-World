@@ -3,7 +3,7 @@ export default interface IConfig {
     host: string;
     port: number;
     mysql: IConfigMysql;
-    http: IConfigHttp;
+    io: IConfigIO;
     debug: boolean;
 }
 
@@ -15,8 +15,8 @@ interface IConfigMysql {
     password: string;
 }
 
-interface IConfigHttp {
+interface IConfigIO {
     host: string;
     port: number;
-    password: string;
+    protocol: string;
 }

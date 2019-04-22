@@ -49,7 +49,7 @@ export default class Session {
                         break;
 
                     case 'P':
-                        // Handler.handleCharacterRandomName(this, packet);
+                        Handler.handleCharacterRandomName(this, packet);
                         break;
 
                     case 'L':
@@ -57,7 +57,7 @@ export default class Session {
                         break;
 
                     case 'A':
-                        // Handler.handleCharacterCreation(this, packet);
+                        Handler.handleCharacterCreation(this, packet);
                         break;
 
                     case 'D':
